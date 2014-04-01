@@ -1,0 +1,92 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ProjectSortirovki
+{
+    class Program
+    {
+        static void q_sort(int[] a, int l, int r)
+        {
+            int m = a[l + (r - l) / 2];
+            int i = l;
+            int j = r;
+            while (i <= j)
+            {
+                while (a[i] < m)
+                    i++;
+                while (a[j] > m)
+                    j--;
+                if (i <= j)
+                {
+                    int temp = a[i];
+                    a[i] = a[j];
+                    a[j] = temp;
+                    i++;
+                    j--;
+                }
+            }
+            if (i < r)
+                q_sort(a, i, r);
+            if (l < j)
+                q_sort(a, l, j);
+        }
+        static void Main()
+        {
+
+            Console.WriteLine("Произвольный массив данных");
+            int cnt = 0;
+            int[] mas = new int[10];
+            // Создаем массив данных
+            int[] bub = new int[10];
+            Random rnd = new Random();
+            for (int i = 0; i < mas.Length; i++)
+            {
+                mas[i] = rnd.Next(99);
+                Console.Write("{0,3}", mas[i]);
+            }
+            // Заполняем наш массив произвольными числами от 0 до 99 и выводим его на экран
+            for (int i = 0; i < bub.Length; i++)
+            {
+                bub[i] = mas[i];
+            }
+            // Массив для работы пузырьком
+            for (int j = 1; j < bub.Length-1; j++)
+            {
+                for (int i = 1; i < bub.Length; i++)
+                {
+                    if (bub[i] < bub[i - 1])
+                    {
+                        int temp = bub[i];
+                        bub[i] = bub[i - 1];
+                        bub[i - 1] = temp;
+                        cnt++;
+
+                    }
+                }
+            }
+            // Сортируем массив пузырьковым методом с подсчетом количества действий
+            Console.WriteLine();
+            Console.WriteLine("Отсортированный пузырьком массив");
+            for (int i = 0; i < bub.Length; i++)
+            {
+                Console.Write("{0,3}", bub[i]);
+            }
+            Console.WriteLine();
+            Console.WriteLine("Количество действий: " + cnt);
+            // Выводим на экран отсортированный массив и количество действий затраченных на его сортировку
+            q_sort(mas, 0, mas.Length-1);
+            for (int i = 0; i < mas.Length; i++)
+            {
+                Console.Write("{0,3}", mas[i]);
+            }
+            Console.Read();
+
+        }
+
+
+
+    }
+}
